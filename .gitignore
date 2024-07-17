@@ -1,0 +1,7 @@
+*.npy
+*.pth
+*.log
+*.safetensors
+*.out
+*.txt
+*.wandb

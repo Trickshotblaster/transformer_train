@@ -1,0 +1,154 @@
+{
+    "os": "Linux-5.15.153.1-microsoft-standard-WSL2-x86_64-with-glibc2.35",
+    "python": "3.10.9",
+    "heartbeatAt": "2024-07-01T20:54:02.188590",
+    "startedAt": "2024-07-01T20:53:47.733641",
+    "docker": null,
+    "cuda": null,
+    "args": [],
+    "state": "running",
+    "program": "/mnt/e/Documents/transformer_train/transformerv4.py",
+    "codePathLocal": "transformerv4.py",
+    "codePath": "transformerv4.py",
+    "host": "MSI",
+    "username": "brogrammer",
+    "executable": "/home/brogrammer/anaconda3/bin/python",
+    "cpu_count": 12,
+    "cpu_count_logical": 24,
+    "cpu_freq": {
+        "current": 2111.998,
+        "min": 0.0,
+        "max": 0.0
+    },
+    "cpu_freq_per_core": [
+        {
+            "current": 2111.998,
+            "min": 0.0,
+            "max": 0.0
+        },
+        {
+            "current": 2111.998,
+            "min": 0.0,
+            "max": 0.0
+        },
+        {
+            "current": 2111.998,
+            "min": 0.0,
+            "max": 0.0
+        },
+        {
+            "current": 2111.998,
+            "min": 0.0,
+            "max": 0.0
+        },
+        {
+            "current": 2111.998,
+            "min": 0.0,
+            "max": 0.0
+        },
+        {
+            "current": 2111.998,
+            "min": 0.0,
+            "max": 0.0
+        },
+        {
+            "current": 2111.998,
+            "min": 0.0,
+            "max": 0.0
+        },
+        {
+            "current": 2111.998,
+            "min": 0.0,
+            "max": 0.0
+        },
+        {
+            "current": 2111.998,
+            "min": 0.0,
+            "max": 0.0
+        },
+        {
+            "current": 2111.998,
+            "min": 0.0,
+            "max": 0.0
+        },
+        {
+            "current": 2111.998,
+            "min": 0.0,
+            "max": 0.0
+        },
+        {
+            "current": 2111.998,
+            "min": 0.0,
+            "max": 0.0
+        },
+        {
+            "current": 2111.998,
+            "min": 0.0,
+            "max": 0.0
+        },
+        {
+            "current": 2111.998,
+            "min": 0.0,
+            "max": 0.0
+        },
+        {
+            "current": 2111.998,
+            "min": 0.0,
+            "max": 0.0
+        },
+        {
+            "current": 2111.998,
+            "min": 0.0,
+            "max": 0.0
+        },
+        {
+            "current": 2111.998,
+            "min": 0.0,
+            "max": 0.0
+        },
+        {
+            "current": 2111.998,
+            "min": 0.0,
+            "max": 0.0
+        },
+        {
+            "current": 2111.998,
+            "min": 0.0,
+            "max": 0.0
+        },
+        {
+            "current": 2111.998,
+            "min": 0.0,
+            "max": 0.0
+        },
+        {
+            "current": 2111.998,
+            "min": 0.0,
+            "max": 0.0
+        },
+        {
+            "current": 2111.998,
+            "min": 0.0,
+            "max": 0.0
+        },
+        {
+            "current": 2111.998,
+            "min": 0.0,
+            "max": 0.0
+        },
+        {
+            "current": 2111.998,
+            "min": 0.0,
+            "max": 0.0
+        }
+    ],
+    "disk": {
+        "/": {
+            "total": 1006.853931427002,
+            "used": 450.1766128540039
+        }
+    },
+    "memory": {
+        "total": 15.540550231933594
+    }
+}

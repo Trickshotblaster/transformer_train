@@ -1,0 +1,14 @@
+{
+  "architectures": [
+    "GPT"
+  ],
+  "block_size": 1024,
+  "d_model": 768,
+  "dropout": 0.1,
+  "model_type": "gpt",
+  "n_heads": 12,
+  "n_layers": 12,
+  "torch_dtype": "float32",
+  "transformers_version": "4.42.3",
+  "vocab_size": 50257
+}
