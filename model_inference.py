@@ -103,17 +103,35 @@ class GPT(nn.Module):
     return logits, loss
 
 
-block_size = 512
-n_layers = 12
+block_size = 256
+n_layers = 16
 n_heads = 12
-d_model = 768
+d_model = 768 * 2
 
 torch.set_float32_matmul_precision('high')
 
 my_GPT = GPT(enc.n_vocab, block_size, n_layers, n_heads, d_model, dropout=0.1) #enc.n_vocab
+# from torchao.float8 import (
+#     convert_to_float8_training,
+#     precompute_float8_dynamic_scale_for_fsdp,
+# )
+
+# # optional: filter modules from being eligible for float8 conversion
+# def module_filter_fn(mod: torch.nn.Module, fqn: str):
+#     # don't convert the output module
+#     if fqn == "output":
+#         return False
+#     # don't convert linear modules with weight dimensions not divisible by 16
+#     if isinstance(mod, torch.nn.Linear):
+#         if mod.in_features % 16 != 0 or mod.out_features % 16 != 0:
+#             return False
+#     return True
+
+# # convert all `torch.nn.Linear` modules to `Float8Linear`
+# convert_to_float8_training(my_GPT, module_filter_fn=module_filter_fn)
 my_GPT = my_GPT.to(device)
 my_GPT = torch.compile(my_GPT)
-my_GPT.load_state_dict(torch.load('latest_model_finetune.pth'))
+my_GPT.load_state_dict(torch.load('latest_model_finetune_cont.pth'))
 my_GPT.eval()
 
 eot = enc._special_tokens['<|endoftext|>']

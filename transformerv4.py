@@ -14,15 +14,15 @@ import os
 enc = tiktoken.get_encoding("gpt2")
 enc.decode(enc.encode("Hello world!"))
 
-#!wget https://raw.githubusercontent.com/karpathy/char-rnn/master/data/tinyshakespeare/input.txt
-with open('input.txt', 'r', encoding='utf-8') as f: # input.txt
-    text = f.read()
-print(text[:100])
+# #!wget https://raw.githubusercontent.com/karpathy/char-rnn/master/data/tinyshakespeare/input.txt
+# with open('input.txt', 'r', encoding='utf-8') as f: # input.txt
+#     text = f.read()
+# print(text[:100])
 
-train_amount = 0.95
-idx = int(train_amount * len(text))
-train_text = text[:idx]
-val_text = text[idx:]
+# train_amount = 0.95
+# idx = int(train_amount * len(text))
+# train_text = text[:idx]
+# val_text = text[idx:]
 
 import numpy as np
 
@@ -56,8 +56,7 @@ class DataLoader:
     tgts = buf[1:].view(self.batch_size, self.block_size)
     self.current_pos += self.batch_size * self.block_size + 1
     return ins, tgts
-dl = DataLoader(train_text, 4, 8)
-dl.next()
+
 
 
 def load_tokens(filename):
@@ -105,8 +104,7 @@ class ShardDataLoader:
         tgts = buf[1:].view(self.batch_size, self.block_size)
         self.current_pos += self.batch_size * self.block_size + 1
         return ins, tgts
-better_dl = ShardDataLoader("train", 4, 8)
-better_dl.next()
+
 class MultiHeadAttention(nn.Module):
   def __init__(self, d_model, n_heads):
     super().__init__()
@@ -202,11 +200,11 @@ class GPT(nn.Module):
       loss = F.cross_entropy(logits.view(-1, self.vocab_size), targets.view(-1))
     return logits, loss
 
-batch_size = 16
+batch_size = 32
 total_batch_size = 32
 assert total_batch_size % batch_size == 0, "batch size must be divisible by micro batch size"
 grad_accum_steps = total_batch_size // batch_size
-block_size = 512
+block_size = 256
 n_layers = 12
 n_heads = 12
 d_model = 768
@@ -224,16 +222,16 @@ if compile and torch.cuda.is_available():
 
 optim = torch.optim.AdamW(my_GPT.parameters(), lr=3e-4, fused=True)
 print("Optimizer created")
-data_loader = ShardDataLoader("train", batch_size, block_size, start_folder="Data/edu_fineweb10B")
+data_loader = ShardDataLoader("train", batch_size, block_size, start_folder="Data/open-orca")
 print("Train data loader created")
 
-val_data_loader = ShardDataLoader("val", batch_size, block_size, start_folder="Data/edu_fineweb10B")
+val_data_loader = ShardDataLoader("val", batch_size, block_size, start_folder="Data/open-orca")
 print("Val data loader created")
 val_interval = 1000
 
 log_interval = 50
-max_steps = 10000
-val_loss_steps = 20
+max_steps = 5000
+val_loss_steps = 10
 print("Steps per epoch:", data_loader.steps_per_shard())
 print(f"GPT Parameters: {sum(p.numel() for p in my_GPT.parameters()) / 1e6} million")
 
@@ -293,7 +291,7 @@ for step in range(max_steps + 1):
     loss_accum += loss.detach()
     loss.backward()
     
-
+  norm = torch.nn.utils.clip_grad_norm_(my_GPT.parameters(), 1.0)
   lr = get_lr(step)
   for param_group in optim.param_groups:
       param_group['lr'] = lr
@@ -307,7 +305,7 @@ for step in range(max_steps + 1):
   if step % log_interval == 0:
     torch.cuda.synchronize()
     step_time = time.time() - step_start
-    print(f"Step {step}, loss: {loss_accum.item()}, time: {round(step_time * 1e3, 2)} ms, tok/s: {(batch_size * block_size) / step_time}")
+    print(f"step {step:5d} | loss: {loss_accum.item():.6f} | lr {lr:.4e} | norm: {norm:.4f} | dt: {step_time*1000:.2f}ms | tok/s: {(batch_size * block_size) / step_time}")
   if step % val_interval == 0:
     with torch.no_grad():
       my_GPT.eval()
@@ -320,8 +318,8 @@ for step in range(max_steps + 1):
           if len(input_tokens) > block_size:
             input_tokens = input_tokens[1:]
           context_tensor = torch.tensor(input_tokens).view(1, -1).to(device)
-          
-          logits, loss = my_GPT(context_tensor)
+          with torch.autocast(device_type='cuda', dtype=torch.bfloat16):
+            logits, loss = my_GPT(context_tensor)
           logits = logits[:, -1, :]
           if top_k > 0:
                 # Remove all tokens with a probability less than the last token of the top-k
@@ -338,7 +336,8 @@ for step in range(max_steps + 1):
       val_loss = 0
       for val_step in range(val_loss_steps):
         val_x, val_y = val_data_loader.next()
-        logits, loss = my_GPT(val_x, val_y)
+        with torch.autocast(device_type='cuda', dtype=torch.bfloat16):
+          logits, loss = my_GPT(val_x, val_y)
         val_loss += loss
       val_loss /= val_loss_steps
       wandb.log({"val-loss": val_loss.item()}, commit=True)
@@ -359,8 +358,8 @@ for x in range(1000):
   if len(input_tokens) > block_size:
     input_tokens = input_tokens[1:]
   context_tensor = torch.tensor(input_tokens).view(1, -1).to(device)
-
-  logits, loss = my_GPT(context_tensor)
+  with torch.autocast(device_type='cuda', dtype=torch.bfloat16):
+    logits, loss = my_GPT(context_tensor)
   logits = logits[:, -1, :]
   if top_k > 0:
         # Remove all tokens with a probability less than the last token of the top-k
@@ -378,15 +377,15 @@ my_GPT.train()
 
 optim = torch.optim.AdamW(my_GPT.parameters(), lr=3e-5, fused=True)
 
-data_loader = ShardDataLoader("train", batch_size, block_size, start_folder="Data/open-orca")
+data_loader = ShardDataLoader("train", batch_size, block_size, start_folder="Data/instruct-code")
 print("Train data loader created")
 
-val_data_loader = ShardDataLoader("val", batch_size, block_size, start_folder="Data/open-orca")
+val_data_loader = ShardDataLoader("val", batch_size, block_size, start_folder="Data/instruct-code")
 print("Val data loader created")
 val_interval = 1000
 
 log_interval = 50
-max_steps = 30000
+max_steps = 10000
 val_loss_steps = 20
 print("Steps per epoch:", data_loader.steps_per_shard())
 print(f"GPT Parameters: {sum(p.numel() for p in my_GPT.parameters()) / 1e6} million")
@@ -395,7 +394,7 @@ torch.set_float32_matmul_precision("high")
 
 max_lr = 3e-4 * 3
 min_lr = max_lr * 0.1
-warmup_steps = 307
+warmup_steps = 715
 
 
 best_val_loss = float("inf")
@@ -412,6 +411,8 @@ for step in range(max_steps + 1):
     loss = loss / grad_accum_steps
     loss_accum += loss.detach()
     loss.backward()
+
+  norm = torch.nn.utils.clip_grad_norm_(my_GPT.parameters(), 1.0)
   lr = get_lr(step)
   for param_group in optim.param_groups:
       param_group['lr'] = lr
@@ -425,7 +426,7 @@ for step in range(max_steps + 1):
   if step % log_interval == 0:
     torch.cuda.synchronize()
     step_time = time.time() - step_start
-    print(f"Step {step}, loss: {loss_accum.item()}, time: {round(step_time * 1e3, 2)} ms, tok/s: {(batch_size * block_size) / step_time}")
+    print(f"step {step:5d} | loss: {loss_accum.item():.6f} | lr {lr:.4e} | norm: {norm:.4f} | dt: {step_time*1000:.2f}ms | tok/s: {(batch_size * block_size) / step_time}")
   if step % val_interval == 0:
     with torch.no_grad():
       my_GPT.eval()
@@ -438,8 +439,8 @@ for step in range(max_steps + 1):
           if len(input_tokens) > block_size:
             input_tokens = input_tokens[1:]
           context_tensor = torch.tensor(input_tokens).view(1, -1).to(device)
-          
-          logits, loss = my_GPT(context_tensor)
+          with torch.autocast(device_type='cuda', dtype=torch.bfloat16):
+            logits, loss = my_GPT(context_tensor)
           logits = logits[:, -1, :]
           if top_k > 0:
                 # Remove all tokens with a probability less than the last token of the top-k
@@ -457,7 +458,8 @@ for step in range(max_steps + 1):
       val_loss = 0
       for val_step in range(val_loss_steps):
         val_x, val_y = val_data_loader.next()
-        logits, loss = my_GPT(val_x, val_y)
+        with torch.autocast(device_type='cuda', dtype=torch.bfloat16):
+          logits, loss = my_GPT(val_x, val_y)
         val_loss += loss
       val_loss /= val_loss_steps
       wandb.log({"val-loss": val_loss.item()}, commit=True)
@@ -477,8 +479,8 @@ for x in range(1000):
   if len(input_tokens) > block_size:
     input_tokens = input_tokens[1:]
   context_tensor = torch.tensor(input_tokens).view(1, -1).to(device)
-
-  logits, loss = my_GPT(context_tensor)
+  with torch.autocast(device_type='cuda', dtype=torch.bfloat16):
+   logits, loss = my_GPT(context_tensor)
   logits = logits[:, -1, :]
   if top_k > 0:
         # Remove all tokens with a probability less than the last token of the top-k

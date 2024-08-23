@@ -1,0 +1,160 @@
+{
+    "os": "Linux-5.15.153.1-microsoft-standard-WSL2-x86_64-with-glibc2.35",
+    "python": "3.10.9",
+    "heartbeatAt": "2024-08-03T21:21:20.365019",
+    "startedAt": "2024-08-03T21:21:18.888757",
+    "docker": null,
+    "cuda": null,
+    "args": [],
+    "state": "running",
+    "program": "/mnt/e/Documents/transformer_train/qmike.py",
+    "codePathLocal": "qmike.py",
+    "codePath": "qmike.py",
+    "git": {
+        "remote": "https://github.com/Trickshotblaster/transformer_train.git",
+        "commit": "ec1966bae15668b5090cdcd356716d220fae404d"
+    },
+    "email": "brodiehoener@icloud.com",
+    "root": "/mnt/e/Documents/transformer_train",
+    "host": "MSI",
+    "username": "brogrammer",
+    "executable": "/home/brogrammer/anaconda3/bin/python3",
+    "cpu_count": 12,
+    "cpu_count_logical": 24,
+    "cpu_freq": {
+        "current": 2111.9989999999984,
+        "min": 0.0,
+        "max": 0.0
+    },
+    "cpu_freq_per_core": [
+        {
+            "current": 2111.999,
+            "min": 0.0,
+            "max": 0.0
+        },
+        {
+            "current": 2111.999,
+            "min": 0.0,
+            "max": 0.0
+        },
+        {
+            "current": 2111.999,
+            "min": 0.0,
+            "max": 0.0
+        },
+        {
+            "current": 2111.999,
+            "min": 0.0,
+            "max": 0.0
+        },
+        {
+            "current": 2111.999,
+            "min": 0.0,
+            "max": 0.0
+        },
+        {
+            "current": 2111.999,
+            "min": 0.0,
+            "max": 0.0
+        },
+        {
+            "current": 2111.999,
+            "min": 0.0,
+            "max": 0.0
+        },
+        {
+            "current": 2111.999,
+            "min": 0.0,
+            "max": 0.0
+        },
+        {
+            "current": 2111.999,
+            "min": 0.0,
+            "max": 0.0
+        },
+        {
+            "current": 2111.999,
+            "min": 0.0,
+            "max": 0.0
+        },
+        {
+            "current": 2111.999,
+            "min": 0.0,
+            "max": 0.0
+        },
+        {
+            "current": 2111.999,
+            "min": 0.0,
+            "max": 0.0
+        },
+        {
+            "current": 2111.999,
+            "min": 0.0,
+            "max": 0.0
+        },
+        {
+            "current": 2111.999,
+            "min": 0.0,
+            "max": 0.0
+        },
+        {
+            "current": 2111.999,
+            "min": 0.0,
+            "max": 0.0
+        },
+        {
+            "current": 2111.999,
+            "min": 0.0,
+            "max": 0.0
+        },
+        {
+            "current": 2111.999,
+            "min": 0.0,
+            "max": 0.0
+        },
+        {
+            "current": 2111.999,
+            "min": 0.0,
+            "max": 0.0
+        },
+        {
+            "current": 2111.999,
+            "min": 0.0,
+            "max": 0.0
+        },
+        {
+            "current": 2111.999,
+            "min": 0.0,
+            "max": 0.0
+        },
+        {
+            "current": 2111.999,
+            "min": 0.0,
+            "max": 0.0
+        },
+        {
+            "current": 2111.999,
+            "min": 0.0,
+            "max": 0.0
+        },
+        {
+            "current": 2111.999,
+            "min": 0.0,
+            "max": 0.0
+        },
+        {
+            "current": 2111.999,
+            "min": 0.0,
+            "max": 0.0
+        }
+    ],
+    "disk": {
+        "/": {
+            "total": 1006.853931427002,
+            "used": 687.7658309936523
+        }
+    },
+    "memory": {
+        "total": 15.540550231933594
+    }
+}

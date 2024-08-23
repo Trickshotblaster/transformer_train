@@ -7,7 +7,7 @@ from datasets import load_dataset # pip install datasets
 from tqdm import tqdm # pip install tqdm
 
 # ------------------------------------------
-local_dir = "Data/open-orca"
+local_dir = "Data/instruct-code"
 remote_name = "Python-mit"
 shard_size = int(1e8) # 100M tokens per shard, total of 100 shards
 
@@ -16,7 +16,7 @@ DATA_CACHE_DIR = os.path.join(os.path.dirname(__file__), local_dir)
 os.makedirs(DATA_CACHE_DIR, exist_ok=True)
 
 # download the dataset
-fw = load_dataset("Open-Orca/OpenOrca", split="train")
+fw = load_dataset("m-a-p/CodeFeedback-Filtered-Instruction", split="train")
 
 # init the tokenizer
 enc = tiktoken.get_encoding("gpt2")
@@ -25,9 +25,9 @@ def tokenize(doc):
     # tokenizes a single document and returns a numpy array of uint16 tokens
     tokens = [eot] # the special <|endoftext|> token delimits all documents
     tokens.extend(enc.encode("USER: "))
-    tokens.extend(enc.encode_ordinary(doc["question"]))
+    tokens.extend(enc.encode_ordinary(doc["query"]))
     tokens.extend(enc.encode("\nASSISTANT: "))
-    tokens.extend(enc.encode_ordinary(doc["response"]))
+    tokens.extend(enc.encode_ordinary(doc["answer"]))
     tokens_np = np.array(tokens)
     assert (0 <= tokens_np).all() and (tokens_np < 2**16).all(), "token dictionary too large for uint16"
     tokens_np_uint16 = tokens_np.astype(np.uint16)

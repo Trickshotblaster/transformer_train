@@ -1,0 +1,70 @@
+wandb_version: 1
+
+learning_rate:
+  desc: null
+  value: 0.0002
+dataset_pretrain:
+  desc: null
+  value: OpenOrca
+dataset_finetune:
+  desc: null
+  value: null
+max_steps:
+  desc: null
+  value: 5000
+max_finetune_steps:
+  desc: null
+  value: 10000
+warmup_steps:
+  desc: null
+  value: 715
+val_loss_steps:
+  desc: null
+  value: 4
+compile:
+  desc: null
+  value: true
+total_batch_size:
+  desc: null
+  value: 16
+batch_size:
+  desc: null
+  value: 8
+block_size:
+  desc: null
+  value: 256
+n_layers:
+  desc: null
+  value: 24
+n_heads:
+  desc: null
+  value: 14
+d_model:
+  desc: null
+  value: 896
+_wandb:
+  desc: null
+  value:
+    python_version: 3.10.9
+    cli_version: 0.17.3
+    framework: torch
+    is_jupyter_run: false
+    is_kaggle_kernel: false
+    start_time: 1722992632
+    t:
+      1:
+      - 1
+      - 55
+      - 105
+      2:
+      - 1
+      - 55
+      - 105
+      3:
+      - 16
+      - 23
+      4: 3.10.9
+      5: 0.17.3
+      8:
+      - 5
+      13: linux-x86_64

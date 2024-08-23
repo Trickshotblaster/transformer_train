@@ -1,0 +1,160 @@
+{
+    "os": "Linux-5.15.153.1-microsoft-standard-WSL2-x86_64-with-glibc2.35",
+    "python": "3.10.9",
+    "heartbeatAt": "2024-08-03T00:51:00.500279",
+    "startedAt": "2024-08-03T00:50:59.323842",
+    "docker": null,
+    "cuda": null,
+    "args": [],
+    "state": "running",
+    "program": "/mnt/e/Documents/transformer_train/transformerv4_bit.py",
+    "codePathLocal": "transformerv4_bit.py",
+    "codePath": "transformerv4_bit.py",
+    "git": {
+        "remote": "https://github.com/Trickshotblaster/transformer_train.git",
+        "commit": "ec1966bae15668b5090cdcd356716d220fae404d"
+    },
+    "email": "brodiehoener@icloud.com",
+    "root": "/mnt/e/Documents/transformer_train",
+    "host": "MSI",
+    "username": "brogrammer",
+    "executable": "/home/brogrammer/anaconda3/bin/python",
+    "cpu_count": 12,
+    "cpu_count_logical": 24,
+    "cpu_freq": {
+        "current": 2111.9989999999984,
+        "min": 0.0,
+        "max": 0.0
+    },
+    "cpu_freq_per_core": [
+        {
+            "current": 2111.999,
+            "min": 0.0,
+            "max": 0.0
+        },
+        {
+            "current": 2111.999,
+            "min": 0.0,
+            "max": 0.0
+        },
+        {
+            "current": 2111.999,
+            "min": 0.0,
+            "max": 0.0
+        },
+        {
+            "current": 2111.999,
+            "min": 0.0,
+            "max": 0.0
+        },
+        {
+            "current": 2111.999,
+            "min": 0.0,
+            "max": 0.0
+        },
+        {
+            "current": 2111.999,
+            "min": 0.0,
+            "max": 0.0
+        },
+        {
+            "current": 2111.999,
+            "min": 0.0,
+            "max": 0.0
+        },
+        {
+            "current": 2111.999,
+            "min": 0.0,
+            "max": 0.0
+        },
+        {
+            "current": 2111.999,
+            "min": 0.0,
+            "max": 0.0
+        },
+        {
+            "current": 2111.999,
+            "min": 0.0,
+            "max": 0.0
+        },
+        {
+            "current": 2111.999,
+            "min": 0.0,
+            "max": 0.0
+        },
+        {
+            "current": 2111.999,
+            "min": 0.0,
+            "max": 0.0
+        },
+        {
+            "current": 2111.999,
+            "min": 0.0,
+            "max": 0.0
+        },
+        {
+            "current": 2111.999,
+            "min": 0.0,
+            "max": 0.0
+        },
+        {
+            "current": 2111.999,
+            "min": 0.0,
+            "max": 0.0
+        },
+        {
+            "current": 2111.999,
+            "min": 0.0,
+            "max": 0.0
+        },
+        {
+            "current": 2111.999,
+            "min": 0.0,
+            "max": 0.0
+        },
+        {
+            "current": 2111.999,
+            "min": 0.0,
+            "max": 0.0
+        },
+        {
+            "current": 2111.999,
+            "min": 0.0,
+            "max": 0.0
+        },
+        {
+            "current": 2111.999,
+            "min": 0.0,
+            "max": 0.0
+        },
+        {
+            "current": 2111.999,
+            "min": 0.0,
+            "max": 0.0
+        },
+        {
+            "current": 2111.999,
+            "min": 0.0,
+            "max": 0.0
+        },
+        {
+            "current": 2111.999,
+            "min": 0.0,
+            "max": 0.0
+        },
+        {
+            "current": 2111.999,
+            "min": 0.0,
+            "max": 0.0
+        }
+    ],
+    "disk": {
+        "/": {
+            "total": 1006.853931427002,
+            "used": 687.1653938293457
+        }
+    },
+    "memory": {
+        "total": 15.540550231933594
+    }
+}
